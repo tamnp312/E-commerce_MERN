@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useState } from 'react';
 import loginIcons from '../assest/signin.gif';
 import { FaEye } from 'react-icons/fa';
@@ -6,6 +6,7 @@ import { FaEyeSlash } from 'react-icons/fa';
 import { Link , useNavigate } from 'react-router-dom';
 import summaryApi from '../common'
 import {toast} from 'react-toastify'
+import Context from '../context';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -14,6 +15,7 @@ const Login = () => {
         password: '',
     });
     const navigate = useNavigate();
+    const { fetchUserDetails } = useContext(Context)
 
     const handleOnChange = (e) => {
         const {name , value} = e.target;
@@ -43,13 +45,14 @@ const Login = () => {
         // console.log('response', response);
         if (response.success) {
             toast.success(response.message);
-            navigate('/')
+            navigate('/');
+            fetchUserDetails();
         } else {
             toast.error(response.message);
         }
     };
 
-    console.log("data login " , data);
+    // console.log("data login " , data);
 
     return (
         <section id="login">

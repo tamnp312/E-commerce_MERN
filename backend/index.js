@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const connectDB = require('./config/db');
 const router = require('./routes');
@@ -14,7 +15,9 @@ app.use(cors({
 
 }));
 app.use(cookieParser());
-app.use(express.json());
+// app.use(express.json());
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }));
 
 app.use("/api", router); 
 const PORT = 8080 || process.env.PORT 
